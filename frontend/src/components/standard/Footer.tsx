@@ -48,26 +48,24 @@ function Footer() {
     ]
 
     return (
-        <>
-            <div className="p-10 flex justify-between bg-secondary text-accent text-left">
-                {infoTextBlocks.map((block, i) => (
-                    <div key={i} className="text-neutral-300">
-                        <div className="text-2xl mb-2">
-                            {block.title ? (
-                                <h1>{block.title}</h1>
-                            ) : (
-                                <h1 className="invisible">placeholder</h1>
-                            )}
-                        </div>
-                        {block.textLines.map((line, i) => (
-                            <div key={i} className={`${line.bold ?? false ? "font-bold" : "text-neutral-400"}`}>
-                                <p>{line.text}</p>
-                            </div>
-                        ))}
+        <div className="p-10 flex justify-between bg-secondary text-primary-foreground text-left">
+            {infoTextBlocks.map((block, i) => (
+                <div key={i} className="text-neutral-300">
+                    <div className="text-2xl mb-2">
+                        {block.title ? (
+                            <h1>{block.title}</h1>
+                        ) : (
+                            <h1 className="invisible">placeholder</h1>
+                        )}
                     </div>
-                ))}
-            </div>
-        </>
+                    {block.textLines.map((line, i) => (
+                        <div key={i} className={`${line.bold ?? false ? "font-bold" : "text-neutral-400"}`}>
+                            <p>{line.text}</p>
+                        </div>
+                    ))}
+                </div>
+            ))}
+        </div>
     )
 }
 
