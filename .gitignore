@@ -739,3 +739,5 @@ node_modules
 dist
 dist-ssr
 *.local
+
+.env

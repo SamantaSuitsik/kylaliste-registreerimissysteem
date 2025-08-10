@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: events_app
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: kylaliste-registreerimissysteem-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    image: mcr.microsoft.com/dotnet/sdk:9.0
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    environment:
+      - ConnectionStrings__Default="Host=db;Port=5432;Database=kylaliste-registreerimissysteem-db;Username=events_app;Password=${DB_PASSWORD}"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    command: sh -c "dotnet restore && dotnet watch --non-interactive run"
+    ports:
+      - "5050:5000"
+    depends_on:
+      - db
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - VITE_API_BASE_URL=http://localhost:5050
+    command: sh -c "npm ci && (npm run dev -- --host --port 5173 || npm start)"
+    ports:
+      - "5173:5173"
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+

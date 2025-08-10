@@ -1,3 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿var builder = WebApplication.CreateBuilder(args);
+var app = WebApplication.Create();
 
-Console.WriteLine("Hello, World!");
+app.MapGet("/api/events", () => new[] {
+    new { id = 1, title = "Demo Event", time = DateTimeOffset.UtcNow.AddDays(1) }
+});
+
+app.Run();;
