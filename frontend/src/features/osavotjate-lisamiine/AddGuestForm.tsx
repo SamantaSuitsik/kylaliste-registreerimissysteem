@@ -4,6 +4,14 @@ import {Input} from "@/components/ui/input.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from "@/components/ui/select.tsx";
 
 function AddGuestForm() {
     const navigate = useNavigate();
@@ -44,11 +52,23 @@ function AddGuestForm() {
                 </div>
                 <div className="flex justify-between">
                     <Label>Maksmisviis:</Label>
-                    <Input name="payment-method" className="w-7/12"></Input>
+                    <div className="w-7/12">
+                        <Select name="payment-method">
+                            <SelectTrigger className="w-full">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectItem value="bank transfer">Pangaülekanne</SelectItem>
+                                    <SelectItem value="cash">Sularaha</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
                 </div>
                 <div className="flex justify-between items-start">
                     <Label>Lisainfo:</Label>
-                    <Textarea name="additional-info" className="w-7/12"></Textarea>
+                    <Textarea name="additional-info" maxLength={1500} className="w-7/12"></Textarea>
                 </div>
                 <div className="self-start flex gap-3 mt-9">
                     <Button onClick={() => navigate(-1)} variant="outline" type="button" className="w-fit" >Tagasi</Button>
