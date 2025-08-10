@@ -7,6 +7,7 @@ import {
 import {Button} from "@/components/ui/button.tsx";
 import type {CustomEvent} from "@/features/avaleht/types.ts";
 import removeIcon from "@/assets/remove.svg"
+import {NavLink} from "react-router-dom";
 
 function EventsTable() {
     const events: Array<CustomEvent> = [
@@ -20,7 +21,7 @@ function EventsTable() {
             name: "Taevapargi avamine",
             time: "30-08-2025"
         }
-    ]
+    ];
 
     return (
         <div>
@@ -31,7 +32,9 @@ function EventsTable() {
                 <TableBody className="bg-white">
                     {events.map((event, i) => (
                         <TableRow key={event.id} className="text-left">
-                            <TableCell className="whitespace-normal">{ i+1 }. {event.name}</TableCell>
+                            <TableCell className="whitespace-normal">
+                                <NavLink to={`osavotjad/${event.id}`}>{ i+1 }. {event.name}</NavLink>
+                            </TableCell>
                             <TableCell>{event.time}</TableCell>
                             <TableCell className="flex justify-end items-center">
                                 <Button variant="link">Osavõtjad</Button>

@@ -1,16 +1,23 @@
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
+import {Textarea} from "@/components/ui/textarea.tsx";
 
 function addEventForm() {
     const navigate = useNavigate();
     function addEvent(formData: FormData) {
         const query = formData.get("name");
+
         alert(`'${query}'`);
     }
 
+    const now = new Date();
+    function localISO() {
+        return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+    }
+
     return (
-        <div className="flex flex-col w-1/2 gap-8">
+        <div className="flex flex-col w-2/5 gap-8">
             <h1 className="text-2xl text-left text-primary">Ürituse lisamine</h1>
             <form action={addEvent} className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
@@ -19,7 +26,7 @@ function addEventForm() {
                 </div>
                 <div className="flex justify-between items-center">
                     <label>Toimumiseaeg:</label>
-                    <Input className="w-7/12 placeholder:italic" name="time" placeholder="pp.kk.aaaa hh:mm"/>
+                    <Input className="w-7/12 placeholder:italic" type="datetime-local" min={localISO()} name="time" />
                 </div>
                 <div className="flex justify-between items-center">
                     <label>Koht:</label>
@@ -27,7 +34,7 @@ function addEventForm() {
                 </div>
                 <div className="flex justify-between items-center">
                     <label>Lisainfo:</label>
-                    <Input className="w-7/12" name="additional-info"/>
+                    <Textarea className="w-7/12" name="additional-info" maxLength={1000}/>
                 </div>
                 <div className="self-start flex gap-3 mt-9">
                     <Button onClick={() => navigate(-1)} variant="outline" type="button" className="w-fit" >Tagasi</Button>

@@ -4,8 +4,8 @@ import AddEventForm from "@/features/yrituse-lisamine/components/AddEventForm.ts
 
 function YrituseLisamine() {
     return (
-        <div className="flex flex-col gap-7 bg-white">
-            <SmallIntroBlock imageLink={grass} />
+        <div className="flex flex-col gap-7">
+            <SmallIntroBlock imageLink={grass} name={"Ürituse lisamine"} />
             <div className="flex justify-center items-center ">
                 <AddEventForm />
             </div>
