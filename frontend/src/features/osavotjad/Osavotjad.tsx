@@ -30,22 +30,22 @@ function Osavotjad() {
         <div className="flex flex-col gap-7">
             <SmallIntroBlock imageLink={grass} name={"Osavõtjad"}/>
             <div className="flex flex-col justify-center items-center">
-                <div className="flex flex-col gap-7 w-1/3">
+                <div className="flex flex-col gap-7 w-1/3 text-left">
                     <h1 className="text-2xl text-left text-primary">Osavõtjad</h1>
-                    <div className="flex justify-between">
-                        <p>Ürituse nimi:</p>
+                    <div className="flex">
+                        <p className="w-40 shrink-0">Ürituse nimi:</p>
                         <p>{event?.name}</p>
                     </div>
-                    <div className="flex justify-between">
-                        <p>Toimumisaeg:</p>
+                    <div className="flex">
+                        <p className="w-40 shrink-0">Toimumisaeg:</p>
                         <p>{event?.time}</p>
                     </div>
-                    <div className="flex justify-between">
-                        <p>Koht:</p>
+                    <div className="flex">
+                        <p className="w-40 shrink-0">Koht:</p>
                         <p>TODO!</p>
                     </div>
-                    <div className="flex justify-between">
-                        <p>Osavõtjad:</p>
+                    <div className="flex">
+                        <p className="w-40 shrink-0">Osavõtjad:</p>
                         <p>TODO!</p>
                     </div>
                 </div>

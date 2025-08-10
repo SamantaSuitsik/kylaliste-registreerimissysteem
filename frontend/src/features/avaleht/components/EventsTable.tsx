@@ -33,11 +33,15 @@ function EventsTable() {
                     {events.map((event, i) => (
                         <TableRow key={event.id} className="text-left">
                             <TableCell className="whitespace-normal">
-                                <NavLink to={`osavotjad/${event.id}`}>{ i+1 }. {event.name}</NavLink>
+                                <NavLink to={`yritus/${event.id}`}>{ i+1 }. {event.name}</NavLink>
                             </TableCell>
                             <TableCell>{event.time}</TableCell>
                             <TableCell className="flex justify-end items-center">
-                                <Button variant="link">Osavõtjad</Button>
+                                <Button variant="link">
+                                    <NavLink to={`yritus/${event.id}/osavotjate-lisamine`}>
+                                        Lisa osavõtja
+                                    </NavLink>
+                                </Button>
                                 <img src={removeIcon} alt="remove icon" className="w-5"/>
                             </TableCell>
                         </TableRow>
