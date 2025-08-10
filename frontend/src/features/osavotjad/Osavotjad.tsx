@@ -1,10 +1,10 @@
 import SmallIntroBlock from "@/components/standard/SmallIntroBlock.tsx";
 import grass from "@/assets/libled.jpg"
 import {useParams} from "react-router-dom";
-import type {CustomEvent} from "@/features/avaleht/types.ts";
+import type {EventItem} from "@/features/avaleht/types.ts";
 
 function Osavotjad() {
-    const events: Array<CustomEvent> = [
+    const events: Array<EventItem> = [
         {
             id: "1",
             name: "Intsikurmu",
@@ -19,7 +19,7 @@ function Osavotjad() {
 
     const { id } = useParams<{ id: string }>();
     const event = id ? findEvent(id) : undefined;
-    function findEvent(id: string): CustomEvent {
+    function findEvent(id: string): EventItem {
         const event = events.find(e => e.id == id);
         if (!event) {
             throw new Error("Error finding event: " + id);

@@ -17,7 +17,7 @@ services:
     volumes:
       - ./backend:/app
     environment:
-      - ConnectionStrings__Default="Host=db;Port=5432;Database=kylaliste-registreerimissysteem-db;Username=events_app;Password=${DB_PASSWORD}"
+      - ConnectionStrings__Default=Host=db;Port=5432;Database=kylaliste-registreerimissysteem-db;Username=events_app;Password=${DB_PASSWORD}
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:5000
       - DOTNET_USE_POLLING_FILE_WATCHER=1

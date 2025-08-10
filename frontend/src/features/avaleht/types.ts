@@ -1,5 +1,7 @@
-export interface CustomEvent {
-    id: string;
+export interface EventItem {
+    id: number;
     name: string;
-    time: string;
+    startsAt: string;
+    location: string;
+    additionalInfo: string;
 }
