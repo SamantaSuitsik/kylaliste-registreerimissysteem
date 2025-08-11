@@ -6,7 +6,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Avaleht from "@/features/avaleht/Avaleht.tsx";
 import YrituseLisamine from "@/features/yrituse-lisamine/YrituseLisamine.tsx";
 import Osavotjad from "@/features/osavotjad/Osavotjad.tsx";
-import OsavotjateLisamine from "@/features/osavotjate-lisamiine/OsavotjateLisamine.tsx";
+import OsavotjateLisamine from "@/features/osavotjate-lisamine/OsavotjateLisamine.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

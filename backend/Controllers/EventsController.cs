@@ -1,6 +1,5 @@
 using backend.Data;
-using backend.Domain.Events;
-using backend.Models;
+using backend.Models.Events;
 using backend.Models.Events;
 using Microsoft.AspNetCore.Mvc;
 

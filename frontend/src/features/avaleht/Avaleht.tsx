@@ -8,7 +8,7 @@ function Avaleht() {
     const { events, loading, error } = useEvents();
 
     if (loading) return <Loader />
-    if (error) return <Alert>{error}</Alert>;
+    if (error) return <Alert variant="destructive">{error}</Alert>;
 
     return (
         <div>
