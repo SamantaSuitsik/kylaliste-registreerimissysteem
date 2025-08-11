@@ -1,3 +1,5 @@
+import type {Guest} from "@/features/osavotjad/types.ts";
+
 export interface EventItem {
     id: number;
     name: string;
@@ -11,4 +13,13 @@ export interface AddEventRequest {
     startsAt: string;
     location: string;
     additionalInfo?: string | null;
+}
+
+export interface EventDetails {
+    id: string;
+    name: string;
+    startsAt: string;
+    location: string;
+    additionalInfo?: string | null;
+    guests: Guest[]
 }

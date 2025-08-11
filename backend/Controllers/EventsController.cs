@@ -1,6 +1,7 @@
 using backend.Data;
 using backend.Models.Events;
 using backend.Models.Events;
+using backend.Models.Guests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
@@ -23,7 +24,7 @@ public class EventsController : ControllerBase
             .Select(e => new EventDto(
                 e.Id,
                 e.Name,
-                e.StartsAt.ToString("yyyy-MM-dd"),
+                e.StartsAt.ToString("dd-MM-yyyy"),
                 e.AdditionalInfo,
                 e.Location
             ))
@@ -46,5 +47,33 @@ public class EventsController : ControllerBase
         dbContext.SaveChanges();
         
         return Ok(eventEntity);
+    }
+
+    [HttpGet("{eventId}")]
+    public IActionResult GetEventById(long eventId)
+    {
+        var dto = dbContext.Events
+            .Where(e => e.Id == eventId)
+            .Select(e => new EventDetailsDto(
+                e.Id,
+                e.Name,
+                e.StartsAt.ToString("dd-MM-yyyy"),
+                e.Location,
+                e.AdditionalInfo,
+                e.Guests.Select(g => new EventGuestDto(
+                        g.PersonId,
+                        g.Person.FirstName,
+                        g.Person.LastName,
+                        g.Person.PersonalIdentificationNumber,
+                        g.PaymentMethod,
+                        g.AdditionalInfo)).ToList()
+                )
+            ).SingleOrDefault();
+
+        if (dto is null)
+        {
+            return NotFound($"Event with id {eventId} not found");
+        }
+        return Ok(dto);
     }
 }

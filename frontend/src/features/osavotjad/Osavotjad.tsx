@@ -1,31 +1,17 @@
 import SmallIntroBlock from "@/components/standard/SmallIntroBlock.tsx";
 import grass from "@/assets/libled.jpg"
 import {useParams} from "react-router-dom";
-import type {EventItem} from "@/features/avaleht/types.ts";
+import {useEventDetails} from "@/features/osavotjad/useEventDetails.ts";
+import {Loader} from "lucide-react";
+import {Alert} from "@/components/ui/alert.tsx";
 
 function Osavotjad() {
-    const events: Array<EventItem> = [
-        {
-            id: "1",
-            name: "Intsikurmu",
-            time: "12-08-2025"
-        },
-        {
-            id: "2",
-            name: "Taevapargi avamine",
-            time: "30-08-2025"
-        }
-    ];
-
     const { id } = useParams<{ id: string }>();
-    const event = id ? findEvent(id) : undefined;
-    function findEvent(id: string): EventItem {
-        const event = events.find(e => e.id == id);
-        if (!event) {
-            throw new Error("Error finding event: " + id);
-        }
-        return event;
-    }
+    const { event, loading, error } = useEventDetails(id);
+
+    if (loading) return <Loader />
+    if (error) return <Alert className="w-fit" variant="destructive">{error}</Alert>;
+
     return (
         <div className="flex flex-col gap-7">
             <SmallIntroBlock imageLink={grass} name={"Osavõtjad"}/>
@@ -38,15 +24,22 @@ function Osavotjad() {
                     </div>
                     <div className="flex">
                         <p className="w-40 shrink-0">Toimumisaeg:</p>
-                        <p>{event?.time}</p>
+                        <p>{event?.startsAt}</p>
                     </div>
                     <div className="flex">
                         <p className="w-40 shrink-0">Koht:</p>
-                        <p>TODO!</p>
+                        <p>{event?.location}</p>
                     </div>
                     <div className="flex">
                         <p className="w-40 shrink-0">Osavõtjad:</p>
-                        <p>TODO!</p>
+                        <ul>
+                            {event?.guests.map((guest) => (
+                                <li key={guest.id}>
+                                    {guest.firstName} {guest.lastName} - {guest.paymentMethod}
+                                </li>
+                            ))}
+                        </ul>
+
                     </div>
                 </div>
             </div>

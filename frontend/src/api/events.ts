@@ -1,4 +1,4 @@
-import type {AddEventRequest, EventItem} from "@/features/avaleht/types.ts";
+import type {AddEventRequest, EventDetails, EventItem} from "@/features/avaleht/types.ts";
 const BASE = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export async function fetchEvents(): Promise<EventItem[]> {
@@ -14,5 +14,11 @@ export async function createEvent(payload: AddEventRequest): Promise<EventItem> 
         body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error(`Failed to create event: ${res.status}`);
+    return res.json();
+}
+
+export async function fetchEvent(id: string): Promise<EventDetails> {
+    const res = await fetch(`${BASE}/api/events/${id}`);
+    if (!res.ok) throw new Error(`Failed to fetch event: ${res.status}`);
     return res.json();
 }
