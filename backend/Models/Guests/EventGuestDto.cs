@@ -5,6 +5,6 @@ public record EventGuestDto(
     string FirstName,
     string LastName,
     string PersonalIdentificationNumber,
-    string Paymentmethod,
+    string PaymentMethod,
     string? AdditionalInfo
 );

@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import {useEventDetails} from "@/features/osavotjad/useEventDetails.ts";
 import {Loader} from "lucide-react";
 import {Alert} from "@/components/ui/alert.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 function Osavotjad() {
     const { id } = useParams<{ id: string }>();
@@ -30,17 +31,24 @@ function Osavotjad() {
                         <p className="w-40 shrink-0">Koht:</p>
                         <p>{event?.location}</p>
                     </div>
-                    <div className="flex">
-                        <p className="w-40 shrink-0">Osavõtjad:</p>
-                        <ul>
-                            {event?.guests.map((guest) => (
-                                <li key={guest.id}>
-                                    {guest.firstName} {guest.lastName} - {guest.paymentMethod}
-                                </li>
-                            ))}
-                        </ul>
+                    <p>Osavõtjad:</p>
+                </div>
+                <div className="w-7/12 self-end px-10">
+                    <ul>
+                        {event?.guests.map((guest, i) => (
+                            <li key={guest.id} className="flex justify-around items-center text-left">
+                                <div className="w-1/3">
+                                    {i+1}. {guest.firstName} {guest.lastName}
+                                </div>
+                                <div className="w-1/3">
+                                    {guest.personalIdentificationNumber}
+                                </div>
+                                <Button className="w-1/6" variant="link">VAATA</Button>
+                                <Button className="w-1/6" variant="link">KUSTUTA</Button>
+                            </li>
+                        ))}
+                    </ul>
 
-                    </div>
                 </div>
             </div>
         </div>

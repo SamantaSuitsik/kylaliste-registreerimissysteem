@@ -3,6 +3,7 @@ using backend.Models.Events;
 using backend.Models.Events;
 using backend.Models.Guests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers;
 
