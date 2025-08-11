@@ -1,4 +1,4 @@
-import type {Guest} from "@/features/osavotjad/types.ts";
+import type {Guest} from "@/features/guests/types.ts";
 
 export interface EventItem {
     id: number;

@@ -1,7 +1,7 @@
 import SmallIntroBlock from "@/components/standard/SmallIntroBlock.tsx";
 import grass from "@/assets/libled.jpg"
 import {useParams} from "react-router-dom";
-import {useEventDetails} from "@/features/osavotjad/useEventDetails.ts";
+import {useEventDetails} from "@/features/events/hooks/useEventDetails.ts";
 import {Loader} from "lucide-react";
 import {Alert} from "@/components/ui/alert.tsx";
 import {Button} from "@/components/ui/button.tsx";
@@ -11,7 +11,7 @@ function Osavotjad() {
     const { event, loading, error } = useEventDetails(id);
 
     if (loading) return <Loader />
-    if (error) return <Alert className="w-fit" variant="destructive">{error}</Alert>;
+    if (error) return <Alert variant="destructive">{error}</Alert>;
 
     return (
         <div className="flex flex-col gap-7">

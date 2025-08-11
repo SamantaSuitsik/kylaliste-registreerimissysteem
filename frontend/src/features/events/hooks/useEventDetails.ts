@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import type {EventDetails} from "@/features/avaleht/types.ts";
-import {fetchEvent} from "@/api/events.ts";
+import type {EventDetails} from "@/features/events/types.ts";
+import {fetchEvent} from "@/features/events/api.ts";
 
 export function useEventDetails(id: string | undefined) {
     const [event, setEvent] = useState<EventDetails | null>(null);

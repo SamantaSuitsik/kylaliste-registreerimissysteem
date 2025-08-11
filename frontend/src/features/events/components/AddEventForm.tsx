@@ -2,9 +2,9 @@ import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 import {Textarea} from "@/components/ui/textarea.tsx";
-import { Label } from "@/components/ui/label";
+import { Label } from "@/components/ui/label.tsx";
 import {type FormEvent, useState} from "react";
-import {createEvent} from "@/api/events.ts";
+import {createEvent} from "@/features/events/api.ts";
 import {Alert} from "@/components/ui/alert.tsx";
 
 function addEventForm() {

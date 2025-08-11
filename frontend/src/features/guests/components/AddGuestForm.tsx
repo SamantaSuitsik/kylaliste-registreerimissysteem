@@ -13,7 +13,7 @@ import {
     SelectValue
 } from "@/components/ui/select.tsx";
 import {type FormEvent, useState} from "react";
-import {createGuest} from "@/api/guests.ts";
+import {createGuest} from "@/features/guests/api.ts";
 import {Alert} from "@/components/ui/alert.tsx";
 
 interface AddGuestFormProps {

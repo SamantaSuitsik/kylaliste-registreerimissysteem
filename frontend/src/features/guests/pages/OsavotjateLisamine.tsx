@@ -1,6 +1,6 @@
 import SmallIntroBlock from "@/components/standard/SmallIntroBlock.tsx";
 import grass from "@/assets/libled.jpg"
-import AddGuestForm from "@/features/osavotjate-lisamine/AddGuestForm.tsx";
+import AddGuestForm from "@/features/guests/components/AddGuestForm.tsx";
 import {useParams} from "react-router-dom";
 
 function OsavotjateLisamine() {

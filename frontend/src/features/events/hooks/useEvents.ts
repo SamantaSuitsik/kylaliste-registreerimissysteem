@@ -1,6 +1,6 @@
-import { fetchEvents } from "@/api/events";
+import { fetchEvents } from "@/features/events/api.ts";
 import {useEffect, useState} from "react";
-import type {EventItem} from "@/features/avaleht/types.ts";
+import type {EventItem} from "@/features/events/types.ts";
 
 export function useEvents() {
     const [events, setEvents] = useState<EventItem[]>([]);

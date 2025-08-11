@@ -1,4 +1,4 @@
-import type {AddGuestRequest, Guest} from "@/features/osavotjad/types.ts";
+import type {AddGuestRequest, Guest} from "@/features/guests/types.ts";
 const BASE = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export async function createGuest(eventId: string, payload: AddGuestRequest): Promise<Guest> {

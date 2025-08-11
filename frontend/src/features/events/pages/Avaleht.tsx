@@ -1,7 +1,7 @@
 import IntroBlock from "@/components/standard/IntroBlock.tsx";
-import EventsTable from "@/features/avaleht/components/EventsTable.tsx";
+import EventsTable from "@/features/events/components/EventsTable.tsx";
 import {Loader} from "lucide-react";
-import {useEvents} from "@/features/avaleht/useEvents.ts";
+import {useEvents} from "@/features/events/hooks/useEvents.ts";
 import {Alert} from "@/components/ui/alert.tsx";
 
 function Avaleht() {

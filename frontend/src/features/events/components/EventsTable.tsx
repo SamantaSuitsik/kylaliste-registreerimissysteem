@@ -5,7 +5,7 @@ import {
     TableRow,
 } from "@/components/ui/table.tsx"
 import {Button} from "@/components/ui/button.tsx";
-import type {EventItem} from "@/features/avaleht/types.ts";
+import type {EventItem} from "@/features/events/types.ts";
 import removeIcon from "@/assets/remove.svg"
 import {NavLink} from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import SmallIntroBlock from "@/components/standard/SmallIntroBlock.tsx";
 import grass from "@/assets/libled.jpg"
-import AddEventForm from "@/features/yrituse-lisamine/components/AddEventForm.tsx";
+import AddEventForm from "@/features/events/components/AddEventForm.tsx";
 
 function YrituseLisamine() {
     return (

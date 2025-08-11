@@ -1,4 +1,4 @@
-import type {AddEventRequest, EventDetails, EventItem} from "@/features/avaleht/types.ts";
+import type {AddEventRequest, EventDetails, EventItem} from "@/features/events/types.ts";
 const BASE = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export async function fetchEvents(): Promise<EventItem[]> {
