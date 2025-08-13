@@ -1,9 +1,10 @@
 using backend.Models.Events;
 using backend.Models.Guests;
 using backend.Models.People;
-
-namespace backend.Data;
 using Microsoft.EntityFrameworkCore;
+
+namespace backend.Data
+{
 public class AppDbContext(DbContextOptions<AppDbContext> options): DbContext(options)
 {
     public DbSet<Event> Events => Set<Event>();
@@ -35,4 +36,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options): DbContext(opt
         g.Property(x => x.PaymentMethod).IsRequired();
         g.HasIndex(x => new { x.EventId, x.PersonId }).IsUnique();
     }
+}
 }

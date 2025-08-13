@@ -1,6 +1,5 @@
 using backend.Data;
 using backend.Models.Events;
-using backend.Models.Events;
 using backend.Models.Guests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ namespace backend.Controllers;
 [Route("api/[controller]")]
 public class EventsController : ControllerBase
 {
-    private  AppDbContext dbContext;
+    private AppDbContext dbContext;
 
     public EventsController(AppDbContext dbContext)
     {
@@ -26,10 +25,10 @@ public class EventsController : ControllerBase
                 e.Id,
                 e.Name,
                 e.StartsAt.ToString("dd-MM-yyyy"),
+                e.Location,
                 e.AdditionalInfo,
-                e.Location
-            ))
-            .ToList();
+                null
+            )).ToList();
         return Ok(allEvents);
     }
 
@@ -54,21 +53,23 @@ public class EventsController : ControllerBase
     public IActionResult GetEventById(long eventId)
     {
         var dto = dbContext.Events
+            .Include(e => e.Guests)
+            .ThenInclude(g => g.Person)
             .Where(e => e.Id == eventId)
-            .Select(e => new EventDetailsDto(
+            .Select(e => new EventDto(
                 e.Id,
                 e.Name,
                 e.StartsAt.ToString("dd-MM-yyyy"),
                 e.Location,
                 e.AdditionalInfo,
                 e.Guests.Select(g => new EventGuestDto(
-                        g.PersonId,
-                        g.Person.FirstName,
-                        g.Person.LastName,
-                        g.Person.PersonalIdentificationNumber,
-                        g.PaymentMethod,
-                        g.AdditionalInfo)).ToList()
-                )
+                    g.PersonId,
+                    g.Person.FirstName,
+                    g.Person.LastName,
+                    g.Person.PersonalIdentificationNumber,
+                    g.PaymentMethod,
+                    g.AdditionalInfo)
+                ).ToList())
             ).SingleOrDefault();
 
         if (dto is null)
