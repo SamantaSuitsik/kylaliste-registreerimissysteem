@@ -1,6 +1,8 @@
+using backend.Features.Attendees.Models;
+using backend.Features.Companies.Models;
+using backend.Features.Events.Models;
+using backend.Features.People;
 using backend.Models.Events;
-using backend.Models.Guests;
-using backend.Models.People;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
@@ -9,7 +11,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options): DbContext(opt
 {
     public DbSet<Event> Events => Set<Event>();
     public DbSet<Person> Persons => Set<Person>();
-    public DbSet<EventGuest> EventGuests => Set<EventGuest>();
+    public DbSet<Company> Companies => Set<Company>();
+    public DbSet<Attendee> Attendees => Set<Attendee>(); 
+    public DbSet<EventAttendee> EventAttendees => Set<EventAttendee>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -21,20 +25,36 @@ public class AppDbContext(DbContextOptions<AppDbContext> options): DbContext(opt
         e.Property(x => x.AdditionalInfo);
         e.Property(x => x.CreatedAt).HasDefaultValueSql("now()");
         
+        var a = b.Entity<Attendee>();
+        a.HasKey(x => x.Id);
+        a.HasDiscriminator<string>("AttendeeType")
+            .HasValue<Person>("Person")
+            .HasValue<Company>("Company");
+        
         var p = b.Entity<Person>();
-        p.HasKey(x => x.Id);
         p.Property(x => x.FirstName).IsRequired();
         p.Property(x => x.LastName).IsRequired();
         p.Property(x => x.PersonalIdentificationNumber).IsRequired();
         p.HasIndex(x => x.PersonalIdentificationNumber).IsUnique();
 
-        var g = b.Entity<EventGuest>();
-        g.HasKey(x => new { x.EventId, x.PersonId });
-        g.HasOne(x => x.Event).WithMany(ev => ev.Guests).HasForeignKey(x => x.EventId).OnDelete(DeleteBehavior.Cascade);
-        g.HasOne(x => x.Person).WithMany(pe => pe.EventLinks).HasForeignKey(x => x.PersonId).OnDelete(DeleteBehavior.Cascade);
+        var c = b.Entity<Company>();
+        c.Property(x => x.Name).IsRequired();
+        c.Property(x => x.RegistrationNumber).IsRequired();
+        c.HasIndex(x => x.RegistrationNumber).IsUnique();
+        c.Property(x => x.NumberOfGuests).IsRequired();
 
-        g.Property(x => x.PaymentMethod).IsRequired();
-        g.HasIndex(x => new { x.EventId, x.PersonId }).IsUnique();
+        var ea = b.Entity<EventAttendee>();
+        ea.HasKey(x => new { x.EventId, x.AttendeeId });
+        ea.Property(x => x.PaymentMethod);
+        ea.Property(x => x.AdditionalInfo);
+        ea.HasOne(x => x.Event)
+            .WithMany(x => x.Attendees)
+            .HasForeignKey(x => x.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
+        ea.HasOne(x => x.Attendee)
+            .WithMany(x => x.EventLinks)
+            .HasForeignKey(x => x.AttendeeId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
 }

@@ -1,4 +1,4 @@
-import type {Guest} from "@/features/guests/types.ts";
+import type {EventAttendeeResponse} from "@/features/guests/types.ts";
 
 export interface EventItem {
     id: number;
@@ -21,5 +21,5 @@ export interface EventDetails {
     startsAt: string;
     location: string;
     additionalInfo?: string | null;
-    guests: Guest[]
+    attendees: EventAttendeeResponse[]
 }

@@ -1,6 +1,6 @@
 namespace backend.Models.Events;
 
-public record AddEventDto(
+public record CreateEventRequest(
     string Name,
     DateTimeOffset StartsAt,
     string Location,

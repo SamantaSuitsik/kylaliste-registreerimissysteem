@@ -1,10 +1,10 @@
 import SmallIntroBlock from "@/components/standard/SmallIntroBlock.tsx";
 import grass from "@/assets/libled.jpg"
 import {useParams} from "react-router-dom";
-import {useEventDetails} from "@/features/events/hooks/useEventDetails.ts";
 import {Loader} from "lucide-react";
 import {Alert} from "@/components/ui/alert.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import { useEventDetails } from "@/features/events/hooks/useEventDetails";
 
 function Osavotjad() {
     const { id } = useParams<{ id: string }>();
@@ -35,13 +35,13 @@ function Osavotjad() {
                 </div>
                 <div className="w-7/12 self-end px-10">
                     <ul>
-                        {event?.guests.map((guest, i) => (
+                        {event?.attendees.map((guest, i) => (
                             <li key={guest.id} className="flex justify-around items-center text-left">
                                 <div className="w-1/3">
-                                    {i+1}. {guest.firstName} {guest.lastName}
+                                    {i+1}. {guest.name}
                                 </div>
                                 <div className="w-1/3">
-                                    {guest.personalIdentificationNumber}
+                                    {guest.personalIdentificationNumber ?? guest.registrationNumber}
                                 </div>
                                 <Button className="w-1/6" variant="link">VAATA</Button>
                                 <Button className="w-1/6" variant="link">KUSTUTA</Button>

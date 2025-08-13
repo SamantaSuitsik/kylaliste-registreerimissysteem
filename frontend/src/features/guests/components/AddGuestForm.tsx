@@ -13,7 +13,7 @@ import {
     SelectValue
 } from "@/components/ui/select.tsx";
 import {type FormEvent, useState} from "react";
-import {createGuest} from "@/features/guests/api.ts";
+import {addAttendee} from "@/features/guests/api.ts";
 import {Alert} from "@/components/ui/alert.tsx";
 
 interface AddGuestFormProps {
@@ -40,15 +40,16 @@ function AddGuestForm({ eventId } : AddGuestFormProps) {
             ? null : String(additinalInfoRaw);
 
         const payload = {
-            firstName,
-            lastName,
-            personalIdentificationNumber,
-            paymentMethod,
-            additionalInfo,
+            kind: "Person",
+            personFirstName: firstName,
+            personLastName: lastName,
+            personalIdentificationNumber: personalIdentificationNumber,
+            paymentMethod: paymentMethod,
+            additionalInfo: additionalInfo,
         }
 
         try {
-            await createGuest(eventId, payload);
+            await addAttendee(eventId, payload);
             navigate("/");
         } catch (err: any) {
             setError(err.message ?? "Failed to add a Guest");

@@ -1,4 +1,4 @@
-using backend.Models.Guests;
+using backend.Features.Events.Models;
 
 namespace backend.Models.Events;
 
@@ -10,5 +10,5 @@ public class Event
     public string? AdditionalInfo { get; set; }
     public string Location { get; set; } = default!;
     public DateTimeOffset CreatedAt { get; set; } =  DateTimeOffset.UtcNow;
-    public List<EventGuest> Guests { get; set; } = [];
+    public List<EventAttendee> Attendees { get; set; } = [];
 }
