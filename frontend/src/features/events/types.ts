@@ -1,4 +1,4 @@
-import type {EventAttendeeResponse} from "@/features/guests/types.ts";
+import type {EventAttendeeResponse} from "@/features/attendees/types.ts";
 
 export interface EventItem {
     id: number;

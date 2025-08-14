@@ -35,13 +35,13 @@ function Osavotjad() {
                 </div>
                 <div className="w-7/12 self-end px-10">
                     <ul>
-                        {event?.attendees.map((guest, i) => (
-                            <li key={guest.id} className="flex justify-around items-center text-left">
+                        {event?.attendees.map((attendee, i) => (
+                            <li key={attendee.id} className="flex justify-around items-center text-left">
                                 <div className="w-1/3">
-                                    {i+1}. {guest.name}
+                                    {i+1}. {attendee.name}
                                 </div>
                                 <div className="w-1/3">
-                                    {guest.personalIdentificationNumber ?? guest.registrationNumber}
+                                    {attendee.personalIdentificationNumber ?? attendee.registrationNumber}
                                 </div>
                                 <Button className="w-1/6" variant="link">VAATA</Button>
                                 <Button className="w-1/6" variant="link">KUSTUTA</Button>

@@ -5,8 +5,8 @@ import App from './App.tsx'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Avaleht from "@/features/events/pages/Avaleht.tsx";
 import YrituseLisamine from "@/features/events/pages/YrituseLisamine.tsx";
-import Osavotjad from "@/features/guests/pages/Osavotjad.tsx";
-import OsavotjateLisamine from "@/features/guests/pages/OsavotjateLisamine.tsx";
+import Osavotjad from "@/features/attendees/pages/Osavotjad.tsx";
+import OsavotjateLisamine from "@/features/attendees/pages/OsavotjateLisamine.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

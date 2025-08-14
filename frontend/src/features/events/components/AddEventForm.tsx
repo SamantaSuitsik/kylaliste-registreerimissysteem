@@ -7,7 +7,7 @@ import {type FormEvent, useState} from "react";
 import {createEvent} from "@/features/events/api.ts";
 import {Alert} from "@/components/ui/alert.tsx";
 
-function addEventForm() {
+function AddEventForm() {
     const navigate = useNavigate();
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -74,4 +74,4 @@ function addEventForm() {
         </div>
     )
 }
-export default addEventForm
+export default AddEventForm

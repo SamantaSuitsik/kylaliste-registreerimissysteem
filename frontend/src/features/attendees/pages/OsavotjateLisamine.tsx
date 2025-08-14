@@ -1,6 +1,6 @@
 import SmallIntroBlock from "@/components/standard/SmallIntroBlock.tsx";
 import grass from "@/assets/libled.jpg"
-import AddGuestForm from "@/features/guests/components/AddGuestForm.tsx";
+import AddAttendeeForm from "@/features/attendees/components/AddAttendeeForm.tsx";
 import {useParams} from "react-router-dom";
 
 function OsavotjateLisamine() {
@@ -8,7 +8,7 @@ function OsavotjateLisamine() {
     return (
         <div className="flex flex-col gap-7">
             <SmallIntroBlock imageLink={grass} name={"Osavõtjate Lisamine"} />
-            <AddGuestForm eventId={eventId!}/>
+            <AddAttendeeForm eventId={eventId!}/>
         </div>
     )
 }

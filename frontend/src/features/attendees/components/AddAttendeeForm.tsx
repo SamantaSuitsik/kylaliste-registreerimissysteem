@@ -13,14 +13,14 @@ import {
     SelectValue
 } from "@/components/ui/select.tsx";
 import {type FormEvent, useState} from "react";
-import {addAttendee} from "@/features/guests/api.ts";
+import {AddAttendee} from "@/features/attendees/api.ts";
 import {Alert} from "@/components/ui/alert.tsx";
 
-interface AddGuestFormProps {
+interface AddAttendeeFormProps {
     eventId: string;
 }
 
-function AddGuestForm({ eventId } : AddGuestFormProps) {
+function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
     const navigate = useNavigate();
     const [paymentMethod, setPaymentMethod] = useState<string>("");
     const [submitting, setSubmitting] = useState(false);
@@ -33,7 +33,7 @@ function AddGuestForm({ eventId } : AddGuestFormProps) {
 
         const formdata = new FormData(e.currentTarget);
         const firstName = String(formdata.get("first-name"));
-        const lastName = String(formdata.get("first-name"));
+        const lastName = String(formdata.get("last-name"));
         const personalIdentificationNumber = String(formdata.get("personal-identification-number"));
         const additinalInfoRaw = formdata.get("additinal-info");
         const additionalInfo = additinalInfoRaw === null || String(additinalInfoRaw).trim() === ""
@@ -49,10 +49,10 @@ function AddGuestForm({ eventId } : AddGuestFormProps) {
         }
 
         try {
-            await addAttendee(eventId, payload);
+            await AddAttendee(eventId, payload);
             navigate("/");
         } catch (err: any) {
-            setError(err.message ?? "Failed to add a Guest");
+            setError(err.message ?? "Failed to add an Attendee");
         } finally {
             setSubmitting(false);
         }
@@ -122,4 +122,4 @@ function AddGuestForm({ eventId } : AddGuestFormProps) {
         </div>
     )
 }
-export default AddGuestForm;
+export default AddAttendeeForm;
