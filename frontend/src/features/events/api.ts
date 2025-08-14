@@ -1,5 +1,6 @@
 import type {AddEventRequest, EventDetails, EventItem} from "@/features/events/types.ts";
-const BASE = import.meta.env.VITE_API_BASE_URL ?? '';
+const BASE = 'http://localhost:5050';
+
 
 export async function fetchEvents(): Promise<EventItem[]> {
     const res = await fetch(`${BASE}/api/events`);

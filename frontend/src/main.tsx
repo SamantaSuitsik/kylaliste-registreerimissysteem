@@ -7,6 +7,7 @@ import Avaleht from "@/features/events/pages/Avaleht.tsx";
 import YrituseLisamine from "@/features/events/pages/YrituseLisamine.tsx";
 import Osavotjad from "@/features/attendees/pages/Osavotjad.tsx";
 import OsavotjateLisamine from "@/features/attendees/pages/OsavotjateLisamine.tsx";
+import OsavotjaInfo from "@/features/attendees/pages/OsavotjaInfo.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="yrituse-lisamine" element={<YrituseLisamine />} />
                 <Route path="yritus/:id" element={<Osavotjad />}/>
                 <Route path="yritus/:id/osavotjate-lisamine" element={<OsavotjateLisamine />}/>
+                <Route path="osavotja/:attendeeId" element={<OsavotjaInfo />}/>
             </Route>
         </Routes>
     </BrowserRouter>

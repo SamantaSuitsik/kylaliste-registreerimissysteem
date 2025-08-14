@@ -1,14 +1,32 @@
-export enum AttendeeType {
-    Person = 1,
-    Company = 2
+export const AttendeeType = {
+    Person: 1,
+    Company: 2
+} as const;
+
+export const PaymentMethod = {
+    BankTransfer: 1,
+    Cash: 2
+} as const;
+
+export type AttendeeType = typeof AttendeeType[keyof typeof AttendeeType];
+export type PaymentMethod = typeof PaymentMethod[keyof typeof PaymentMethod];
+
+export interface AttendeeRequest {
+    kind: AttendeeType;
+    personFirstName?: string;
+    personLastName?: string;
+    companyName?: string;
+    personalIdentificationNumber?: string;
+    registrationNumber?: string;
+    numberOfAttendees?: number;
+    paymentMethod: PaymentMethod;
+    additionalInfo?: string | null;
 }
 
-export enum PaymentMethod {
-    BankTransfer = 1,
-    Cash = 2
-}
 
-export interface AddAttendeeRequest {
+
+export interface GetAttendeeResponse {
+    id: number;
     kind: AttendeeType;
     personFirstName?: string;
     personLastName?: string;
@@ -21,7 +39,7 @@ export interface AddAttendeeRequest {
 }
 
 export interface Attendee {
-    id: string;
+    id: number;
     firstName: string;
     lastName: string;
     personalIdentificationNumber: string;
@@ -30,7 +48,7 @@ export interface Attendee {
 }
 
 export interface EventAttendeeResponse {
-    id: number;
+    attendeeId: number;
     kind: AttendeeType;
     name: string;
     personalIdentificationNumber?: string | null;

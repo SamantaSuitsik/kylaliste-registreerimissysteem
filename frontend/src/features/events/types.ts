@@ -9,7 +9,7 @@ export interface EventItem {
 }
 
 export interface AddEventRequest {
-    name: number;
+    name: string;
     startsAt: string;
     location: string;
     additionalInfo?: string | null;
