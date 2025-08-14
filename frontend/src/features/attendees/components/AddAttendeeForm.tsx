@@ -15,7 +15,7 @@ import {
 import {type FormEvent, useState} from "react";
 import {AddAttendee} from "@/features/attendees/api.ts";
 import {Alert} from "@/components/ui/alert.tsx";
-import {AttendeeType} from "@/features/attendees/types.ts";
+import {AttendeeType, PaymentMethod} from "@/features/attendees/types.ts";
 
 interface AddAttendeeFormProps {
     eventId: string;
@@ -24,7 +24,7 @@ interface AddAttendeeFormProps {
 function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
     const navigate = useNavigate();
     const [attendeeType, setAttendeeType] = useState<AttendeeType>(AttendeeType.Person);
-    const [paymentMethod, setPaymentMethod] = useState<string>("");
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.BankTransfer);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -137,14 +137,18 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
                 <div className="flex justify-between">
                     <Label>Maksmisviis:</Label>
                     <div className="w-7/12">
-                        <Select value={paymentMethod} onValueChange={setPaymentMethod} required>
+                        <Select 
+                            value={paymentMethod.toString()} 
+                            onValueChange={(value) => setPaymentMethod(Number(value) as PaymentMethod)} 
+                            required
+                        >
                             <SelectTrigger className="w-full">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    <SelectItem value="bank transfer">Pangaülekanne</SelectItem>
-                                    <SelectItem value="cash">Sularaha</SelectItem>
+                                    <SelectItem value={PaymentMethod.BankTransfer.toString()}>Pangaülekanne</SelectItem>
+                                    <SelectItem value={PaymentMethod.Cash.toString()}>Sularaha</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>

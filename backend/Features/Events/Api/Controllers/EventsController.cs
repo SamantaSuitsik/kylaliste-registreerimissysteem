@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Features.Attendees.Models;
 using backend.Features.Companies.Models;
 using backend.Features.Events.Api.Dtos;
 using backend.Features.People;
@@ -88,7 +89,7 @@ public class EventsController : ControllerBase
             eventData.Attendees.Select(ea =>
                 new EventAttendeeResponse(
                     ea.AttendeeId,
-                    ea.Attendee is Person ? "Person" : "Company",
+                    ea.Attendee is Person ? AttendeeType.Person : AttendeeType.Company,
                     ea.Attendee is Person p ? p.FirstName + " " + p.LastName : ((Company)ea.Attendee).Name,
                     ea.Attendee is Person pe ? pe.PersonalIdentificationNumber : null,
                     ea.Attendee is Company c ? c.RegistrationNumber : null,

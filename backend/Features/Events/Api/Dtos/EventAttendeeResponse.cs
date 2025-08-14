@@ -1,11 +1,13 @@
+using backend.Features.Attendees.Models;
+
 namespace backend.Features.Events.Api.Dtos;
 
 public record EventAttendeeResponse(
     long AttendeeId,
-    string Kind,
+    AttendeeType Kind,
     string Name,
     string? PersonalIdentificationNumber,
     string? RegistrationNumber,
-    string PaymentMethod,
+    PaymentMethod PaymentMethod,
     string? AdditionalInfo
 );    

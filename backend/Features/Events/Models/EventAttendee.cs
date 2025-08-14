@@ -9,6 +9,6 @@ public class EventAttendee
     public Event Event { get; set; } = null!;
     public long AttendeeId { get; set; }
     public Attendee Attendee { get; set; } = null!;
-    public string PaymentMethod { get; set; } = default!;  // Todo: make paymentmethod to enum!
+    public PaymentMethod PaymentMethod { get; set; } = default!;
     public string? AdditionalInfo { get; set; }
 }

@@ -3,6 +3,11 @@ export enum AttendeeType {
     Company = 2
 }
 
+export enum PaymentMethod {
+    BankTransfer = 1,
+    Cash = 2
+}
+
 export interface AddAttendeeRequest {
     kind: AttendeeType;
     personFirstName?: string;
@@ -11,7 +16,7 @@ export interface AddAttendeeRequest {
     personalIdentificationNumber?: string;
     registrationNumber?: string;
     numberOfAttendees?: number;
-    paymentMethod: string;
+    paymentMethod: PaymentMethod;
     additionalInfo?: string | null;
 }
 

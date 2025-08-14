@@ -11,6 +11,6 @@ public class AddAttendeeRequest
     public string? PersonalIdentificationNumber { get; set; }
     public string? RegistrationNumber { get; set; }
     public int? NumberOfAttendees { get; set; }
-    public string PaymentMethod { get; set; } = default!;
+    public PaymentMethod PaymentMethod { get; set; } = default!;
     public string? AdditionalInfo { get; set; }
 }
