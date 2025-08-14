@@ -22,3 +22,10 @@ export async function fetchEvent(id: string): Promise<EventDetails> {
     if (!res.ok) throw new Error(`Failed to fetch event: ${res.status}`);
     return res.json();
 }
+
+export async function deleteEvent(id: number): Promise<void> {
+    const res = await fetch(`${BASE}/api/events/${id}`, {
+        method: "DELETE"
+    });
+    if (!res.ok) throw new Error(`Failed to delete event: ${res.status}`);
+}

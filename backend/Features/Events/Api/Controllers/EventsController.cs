@@ -100,4 +100,18 @@ public class EventsController : ControllerBase
 
         return Ok(eventResponse);
     }
+
+    [HttpDelete("{eventId:long}")]
+    public IActionResult DeleteEvent(long eventId)
+    {
+        var e = dbContext.Events.Find(eventId);
+        if (e is null)
+        {
+            return NotFound($"Event with id {eventId} not found");
+        }
+
+        dbContext.Events.Remove(e);
+        dbContext.SaveChanges();
+        return NoContent();
+    }
 }

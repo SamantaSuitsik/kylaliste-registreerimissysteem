@@ -9,8 +9,12 @@ import type {EventItem} from "@/features/events/types.ts";
 import removeIcon from "@/assets/remove.svg"
 import {NavLink} from "react-router-dom";
 
-function EventsTable({ events }: { events: EventItem[] }) {
+interface EventsTableProps {
+    events: EventItem[];
+    onEventDelete: (eventId: number) => Promise<void>;
+}
 
+function EventsTable({ events, onEventDelete }: EventsTableProps) {
     return (
         <div>
             <div className="flex p-5 items-center justify-center bg-primary text-primary-foreground">
@@ -30,7 +34,9 @@ function EventsTable({ events }: { events: EventItem[] }) {
                                         Lisa osavõtja
                                     </NavLink>
                                 </Button>
-                                <img src={removeIcon} alt="remove icon" className="w-5"/>
+                                <Button onClick={() => onEventDelete(event.id)} variant="ghost" className="hover:bg-transparent cursor-pointer p-0">
+                                    <img src={removeIcon} alt="remove icon" className="w-5"/>
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}
