@@ -7,12 +7,22 @@ export function useEvents() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>();
 
+    const fetchEventsData = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const data = await fetchEvents();
+            setEvents(data);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        fetchEvents()
-            .then(setEvents)
-            .catch(err => setError(err.message))
-            .finally(() => setLoading(false));
+        fetchEventsData();
     }, []);
 
-    return { events, loading, error };
+    return { events, loading, error, refetch: fetchEventsData };
 }
