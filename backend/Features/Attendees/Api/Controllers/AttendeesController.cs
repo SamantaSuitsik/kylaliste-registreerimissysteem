@@ -1,6 +1,7 @@
 using backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using backend.Features.Attendees.Models;
+using backend.Features.Attendees.Api.Dtos;
 using backend.Features.People;
 using backend.Features.Companies.Models;
 using backend.Features.Events.Models;
@@ -31,7 +32,7 @@ public class AttendeesController : ControllerBase
 
         
         Attendee attendee;
-        if (attendeeRequest.Kind == "Person")
+        if (attendeeRequest.Kind == AttendeeType.Person)
         {
             attendee = new Person
             {
@@ -40,7 +41,7 @@ public class AttendeesController : ControllerBase
                 PersonalIdentificationNumber = attendeeRequest.PersonalIdentificationNumber!
             };
         }
-        else if (attendeeRequest.Kind == "Company")
+        else if (attendeeRequest.Kind == AttendeeType.Company)
         {
             attendee = new Company
             {
@@ -69,17 +70,4 @@ public class AttendeesController : ControllerBase
 
         return Ok(eventAttendee.AttendeeId);
     }
-}
-
-public class AddAttendeeRequest
-{
-    public string Kind { get; set; } = default!;
-    public string? PersonFirstName { get; set; }
-    public string? PersonLastName { get; set; }
-    public string? CompanyName { get; set; }
-    public string? PersonalIdentificationNumber { get; set; }
-    public string? RegistrationNumber { get; set; }
-    public int? NumberOfAttendees { get; set; }
-    public string PaymentMethod { get; set; } = default!;
-    public string? AdditionalInfo { get; set; }
 }

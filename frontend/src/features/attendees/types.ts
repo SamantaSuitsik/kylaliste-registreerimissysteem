@@ -1,5 +1,10 @@
+export enum AttendeeType {
+    Person = 1,
+    Company = 2
+}
+
 export interface AddAttendeeRequest {
-    kind: string;
+    kind: AttendeeType;
     personFirstName?: string;
     personLastName?: string;
     companyName?: string;
@@ -21,7 +26,7 @@ export interface Attendee {
 
 export interface EventAttendeeResponse {
     id: number;
-    kind: string;
+    kind: AttendeeType;
     name: string;
     personalIdentificationNumber?: string | null;
     registrationNumber?: string | null;

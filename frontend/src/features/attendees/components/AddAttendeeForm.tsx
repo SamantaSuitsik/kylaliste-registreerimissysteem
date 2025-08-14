@@ -15,6 +15,7 @@ import {
 import {type FormEvent, useState} from "react";
 import {AddAttendee} from "@/features/attendees/api.ts";
 import {Alert} from "@/components/ui/alert.tsx";
+import {AttendeeType} from "@/features/attendees/types.ts";
 
 interface AddAttendeeFormProps {
     eventId: string;
@@ -22,6 +23,7 @@ interface AddAttendeeFormProps {
 
 function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
     const navigate = useNavigate();
+    const [attendeeType, setAttendeeType] = useState<AttendeeType>(AttendeeType.Person);
     const [paymentMethod, setPaymentMethod] = useState<string>("");
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -32,20 +34,30 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
         setSubmitting(true);
 
         const formdata = new FormData(e.currentTarget);
-        const firstName = String(formdata.get("first-name"));
-        const lastName = String(formdata.get("last-name"));
-        const personalIdentificationNumber = String(formdata.get("personal-identification-number"));
         const additinalInfoRaw = formdata.get("additinal-info");
         const additionalInfo = additinalInfoRaw === null || String(additinalInfoRaw).trim() === ""
             ? null : String(additinalInfoRaw);
 
-        const payload = {
-            kind: "Person",
-            personFirstName: firstName,
-            personLastName: lastName,
-            personalIdentificationNumber: personalIdentificationNumber,
-            paymentMethod: paymentMethod,
-            additionalInfo: additionalInfo,
+        let payload;
+
+        if (attendeeType === AttendeeType.Company) {
+            payload = {
+                kind: AttendeeType.Company,
+                companyName: String(formdata.get("company-name")),
+                registrationNumber: String(formdata.get("registration-number")),
+                numberOfAttendees: Number(formdata.get("number-of-attendees")),
+                paymentMethod: paymentMethod,
+                additionalInfo: additionalInfo,
+            };
+        } else {
+            payload = {
+                kind: AttendeeType.Person,
+                personFirstName: String(formdata.get("first-name")),
+                personLastName: String(formdata.get("last-name")),
+                personalIdentificationNumber: String(formdata.get("personal-identification-number")),
+                paymentMethod: paymentMethod,
+                additionalInfo: additionalInfo,
+            };
         }
 
         try {
@@ -56,8 +68,6 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
         } finally {
             setSubmitting(false);
         }
-
-
     }
 
     return (
@@ -65,32 +75,65 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
             <div className="w-1/3">
                 <h1 className="text-2xl text-left text-primary mb-10">Osavõtjate lisamine</h1>
             </div>
-            <form onSubmit={onSubmit} className="flex flex-col gap-3 w-1/3">
+            <form onSubmit={onSubmit} className="flex flex-col gap-3 w-2/5">
                 <div className="flex justify-between items-center w-full mb-2 ">
                     <div aria-hidden="true"/>
-                    <RadioGroup defaultValue="private-person" className="flex gap-9 w-7/12">
+                    <RadioGroup
+                        value={attendeeType.toString()}
+                        onValueChange={(value) => setAttendeeType(Number(value) as AttendeeType)}
+                        className="flex gap-9 w-7/12"
+                    >
                         <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="private-person" id="private-person" />
-                            <Label className="text-md" htmlFor="private-person">Eraisik</Label>
+                            <RadioGroupItem value={AttendeeType.Person.toString()} id="person" />
+                            <Label className="text-md" htmlFor="person">Eraisik</Label>
                         </div>
-                        {/*<div className="flex items-center space-x-2">*/}
-                        {/*    <RadioGroupItem value="company" id="company" />*/}
-                        {/*    <Label className="text-md" htmlFor="company">Ettevõte</Label>*/}
-                        {/*</div>*/}
+                        <div className="flex items-center space-x-2">
+                            <RadioGroupItem value={AttendeeType.Company.toString()} id="company" />
+                            <Label className="text-md" htmlFor="company">Ettevõte</Label>
+                        </div>
                     </RadioGroup>
                 </div>
-                <div className="flex justify-between">
-                    <Label>Eesnimi:</Label>
-                    <Input required name="first-name" className="w-7/12"></Input>
-                </div>
-                <div className="flex justify-between">
-                    <Label>Perenimi:</Label>
-                    <Input required name="last-name" className="w-7/12"></Input>
-                </div>
-                <div className="flex justify-between">
-                    <Label>Isikukood:</Label>
-                    <Input required name="personal-identification-number" className="w-7/12"></Input>
-                </div>
+
+                {attendeeType === AttendeeType.Person && (
+                    <>
+                        <div className="flex justify-between">
+                            <Label>Eesnimi:</Label>
+                            <Input required name="first-name" className="w-7/12"></Input>
+                        </div>
+                        <div className="flex justify-between">
+                            <Label>Perenimi:</Label>
+                            <Input required name="last-name" className="w-7/12"></Input>
+                        </div>
+                        <div className="flex justify-between">
+                            <Label>Isikukood:</Label>
+                            <Input required name="personal-identification-number" className="w-7/12"></Input>
+                        </div>
+                    </>
+                )}
+
+                {attendeeType === AttendeeType.Company && (
+                    <>
+                        <div className="flex justify-between">
+                            <Label>Ettevõtte nimi:</Label>
+                            <Input required name="company-name" className="w-7/12"></Input>
+                        </div>
+                        <div className="flex justify-between">
+                            <Label>Registreerimisnumber:</Label>
+                            <Input required name="registration-number" className="w-7/12"></Input>
+                        </div>
+                        <div className="flex justify-between">
+                            <Label>Osavõtjate arv:</Label>
+                            <Input
+                                required
+                                name="number-of-attendees"
+                                type="number"
+                                min="1"
+                                className="w-7/12"
+                            ></Input>
+                        </div>
+                    </>
+                )}
+
                 <div className="flex justify-between">
                     <Label>Maksmisviis:</Label>
                     <div className="w-7/12">
