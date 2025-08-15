@@ -27,7 +27,7 @@ function EventsTable({ events, onEventDelete }: EventsTableProps) {
                             <TableCell className="whitespace-normal">
                                 <NavLink to={`yritus/${event.id}`}>{ i+1 }. {event.name}</NavLink>
                             </TableCell>
-                            <TableCell>{event.startsAt}</TableCell>
+                            <TableCell>{event.startsAt.toLocaleDateString()}</TableCell>
                             <TableCell className="flex justify-end items-center">
                                 <Button variant="link">
                                     <NavLink to={`yritus/${event.id}/osavotjate-lisamine`}>

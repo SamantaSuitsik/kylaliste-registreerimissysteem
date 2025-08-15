@@ -48,7 +48,7 @@ function Osavotjad() {
                     </div>
                     <div className="flex">
                         <p className="w-40 shrink-0">Toimumisaeg:</p>
-                        <p>{event?.startsAt}</p>
+                        <p>{event?.startsAt.toLocaleDateString()}</p>
                     </div>
                     <div className="flex">
                         <p className="w-40 shrink-0">Koht:</p>

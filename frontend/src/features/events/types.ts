@@ -3,7 +3,7 @@ import type {EventAttendeeResponse} from "@/features/attendees/types.ts";
 export interface EventItem {
     id: number;
     name: string;
-    startsAt: string;
+    startsAt: Date;
     location: string;
     additionalInfo?: string | null;
 }
@@ -18,7 +18,7 @@ export interface AddEventRequest {
 export interface EventDetails {
     id: number;
     name: string;
-    startsAt: string;
+    startsAt: Date;
     location: string;
     additionalInfo?: string | null;
     attendees: EventAttendeeResponse[]

@@ -27,7 +27,7 @@ public class EventsController : ControllerBase
             .Select(e => new EventResponse(
                 e.Id,
                 e.Name,
-                e.StartsAt.ToString("dd-MM-yyyy"),
+                e.StartsAt,
                 e.Location,
                 e.AdditionalInfo,
                 null
@@ -83,7 +83,7 @@ public class EventsController : ControllerBase
         var eventResponse = new EventResponse(
             eventData.Id,
             eventData.Name,
-            eventData.StartsAt.ToString("dd-MM-yyyy"),
+            eventData.StartsAt,
             eventData.Location,
             eventData.AdditionalInfo,
             eventData.Attendees.Select(ea =>
