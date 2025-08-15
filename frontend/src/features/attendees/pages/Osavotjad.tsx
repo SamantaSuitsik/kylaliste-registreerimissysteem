@@ -1,8 +1,7 @@
 import SmallIntroBlock from "@/components/standard/SmallIntroBlock.tsx";
 import grass from "@/assets/libled.jpg"
 import {useParams, useNavigate} from "react-router-dom";
-import {Loader} from "lucide-react";
-import {Alert} from "@/components/ui/alert.tsx";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import { useEventDetails } from "@/features/events/hooks/useEventDetails";
 import { DeleteAttendee } from "@/features/attendees/api.ts";
@@ -10,10 +9,18 @@ import { DeleteAttendee } from "@/features/attendees/api.ts";
 function Osavotjad() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const { event, loading, error } = useEventDetails(id);
+    const { event, error } = useEventDetails(id);
 
-    if (loading) return <Loader />
-    if (error) return <Alert variant="destructive">{error}</Alert>;
+    if (error) return (
+        <div>
+            <Alert variant="destructive" className="w-fit flex items-center gap-5">
+                <AlertTitle>Viga</AlertTitle>
+                <AlertDescription>
+                    {error}
+                </AlertDescription>
+            </Alert>
+        </div>
+    );
 
     const handleViewAttendee = (attendeeId: number) => {
         navigate(`/osavotja/${attendeeId}`);
@@ -24,9 +31,9 @@ function Osavotjad() {
             await DeleteAttendee(attendeeId.toString());
             window.location.reload();
         } catch (err: any) {
-            alert(`Error with deleting an attendee: ${err.message}`);
+            alert(`Osaleja kustutamine ebaõnnestus!`);
         }
-        
+
     };
 
     return (
@@ -59,8 +66,8 @@ function Osavotjad() {
                                 <div className="w-1/3">
                                     {attendee.personalIdentificationNumber ?? attendee.registrationNumber}
                                 </div>
-                                <Button 
-                                    className="w-1/6" 
+                                <Button
+                                    className="w-1/6"
                                     variant="link"
                                     onClick={() => {
                                         handleViewAttendee(attendee.attendeeId);

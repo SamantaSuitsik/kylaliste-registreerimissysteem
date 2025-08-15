@@ -5,7 +5,7 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import {type FormEvent, useState} from "react";
 import {createEvent} from "@/features/events/api.ts";
-import {Alert} from "@/components/ui/alert.tsx";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 
 function AddEventForm() {
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ function AddEventForm() {
             await createEvent({ name, location, startsAt, additionalInfo });
             navigate("/");
         } catch (err: any) {
-            setError(err.message ?? "Failed to create event");
+            setError(err.message ?? "ürituse lisamisel ilmnes viga!");
         } finally {
             setSubmitting(false);
         }
@@ -61,7 +61,14 @@ function AddEventForm() {
                     <Label>Lisainfo:</Label>
                     <Textarea className="w-7/12" name="additional-info" maxLength={1000}/>
                 </div>
-                {error && <Alert variant="destructive">{error}</Alert>}
+                {error &&
+                    <Alert variant="destructive" className="w-fit flex items-center gap-5">
+                        <AlertTitle>Viga</AlertTitle>
+                        <AlertDescription>
+                            {error}
+                        </AlertDescription>
+                    </Alert>
+                }
                 <div className="self-start flex gap-3 mt-9">
                     <Button onClick={() => navigate(-1)} variant="outline" type="button" className="w-fit" disabled={submitting}>
                         Tagasi

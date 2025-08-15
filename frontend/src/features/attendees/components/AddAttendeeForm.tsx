@@ -14,8 +14,9 @@ import {
 } from "@/components/ui/select.tsx";
 import {type FormEvent, useState} from "react";
 import {AddAttendee} from "@/features/attendees/api.ts";
-import {Alert} from "@/components/ui/alert.tsx";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 import {AttendeeType, PaymentMethod} from "@/features/attendees/types.ts";
+import {isPersonalIdentificationNumberValid} from "@/lib/validation.ts";
 
 interface AddAttendeeFormProps {
     eventId: string;
@@ -32,8 +33,14 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
         e.preventDefault();
         setError(null);
         setSubmitting(true);
-
         const formdata = new FormData(e.currentTarget);
+
+        const id_code = String(formdata.get("personal-identification-number"));
+        if (!isPersonalIdentificationNumberValid(id_code)) {
+            setSubmitting(false);
+            setError("Vigane isikukood!");
+            return;
+        }
         const additinalInfoRaw = formdata.get("additinal-info");
         const additionalInfo = additinalInfoRaw === null || String(additinalInfoRaw).trim() === ""
             ? null : String(additinalInfoRaw);
@@ -54,7 +61,7 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
                 kind: AttendeeType.Person,
                 personFirstName: String(formdata.get("first-name")),
                 personLastName: String(formdata.get("last-name")),
-                personalIdentificationNumber: String(formdata.get("personal-identification-number")),
+                personalIdentificationNumber: id_code,
                 paymentMethod: paymentMethod,
                 additionalInfo: additionalInfo,
             };
@@ -106,7 +113,7 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
                         </div>
                         <div className="flex justify-between">
                             <Label>Isikukood:</Label>
-                            <Input required name="personal-identification-number" className="w-7/12"></Input>
+                            <Input required name="personal-identification-number" className="w-7/12" minLength={11} maxLength={11}></Input>
                         </div>
                     </>
                 )}
@@ -137,9 +144,9 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
                 <div className="flex justify-between">
                     <Label>Maksmisviis:</Label>
                     <div className="w-7/12">
-                        <Select 
-                            value={paymentMethod.toString()} 
-                            onValueChange={(value) => setPaymentMethod(Number(value) as PaymentMethod)} 
+                        <Select
+                            value={paymentMethod.toString()}
+                            onValueChange={(value) => setPaymentMethod(Number(value) as PaymentMethod)}
                             required
                         >
                             <SelectTrigger className="w-full">
@@ -158,7 +165,13 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
                     <Label>Lisainfo:</Label>
                     <Textarea name="additional-info" maxLength={1500} className="w-7/12"></Textarea>
                 </div>
-                {error && <Alert variant="destructive">{error}</Alert>}
+                {error &&
+                <Alert variant="destructive" className="w-fit flex items-center gap-5">
+                    <AlertTitle>Viga</AlertTitle>
+                    <AlertDescription>
+                        {error}
+                    </AlertDescription>
+                </Alert>}
                 <div className="self-start flex gap-3 mt-9">
                     <Button onClick={() => navigate(-1)} variant="outline" type="button" className="w-fit" disabled={submitting}>Tagasi</Button>
                     <Button type="submit" className="w-fit" disabled={submitting}>

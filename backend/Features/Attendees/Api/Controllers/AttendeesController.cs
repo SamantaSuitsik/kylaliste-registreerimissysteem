@@ -29,9 +29,6 @@ public class AttendeesController : ControllerBase
         {
             return NotFound($"Event with id {eventId} not found");
         }
-
-        // TODO: validate personal identification number!
-
         
         Attendee attendee;
         if (attendeeRequest.Kind == AttendeeType.Person)

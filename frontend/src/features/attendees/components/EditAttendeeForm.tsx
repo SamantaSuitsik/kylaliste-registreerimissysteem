@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select.tsx";
 import {type FormEvent, useState, useEffect} from "react";
 import {EditAttendee, GetAttendee} from "@/features/attendees/api.ts";
-import {Alert} from "@/components/ui/alert.tsx";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 import {AttendeeType, PaymentMethod} from "@/features/attendees/types.ts";
 import type {AttendeeRequest} from "@/features/attendees/types.ts";
 
@@ -28,7 +28,7 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
     const [submitting, setSubmitting] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [companyName, setCompanyName] = useState("");
@@ -44,7 +44,7 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                 setAttendeeType(attendee.kind);
                 setPaymentMethod(Number(attendee.paymentMethod) as PaymentMethod);
                 setAdditionalInfo(attendee.additionalInfo || "");
-                
+
                 if (attendee.kind === AttendeeType.Person) {
                     setFirstName(attendee.personFirstName || "");
                     setLastName(attendee.personLastName || "");
@@ -55,12 +55,12 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                     setNumberOfAttendees(attendee.numberOfAttendees || 1);
                 }
             } catch (err: any) {
-                setError(err.message ?? "Failed to load attendee");
+                setError(err.message ?? "Osalejat ei leitud!");
             } finally {
                 setLoading(false);
             }
         }
-        
+
         loadAttendee();
     }, [attendeeId]);
 
@@ -95,7 +95,7 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
             await EditAttendee(attendeeId, payload);
             navigate(-1);
         } catch (err: any) {
-            setError(err.message ?? "Failed to update attendee");
+            setError(err.message ?? "Osaleja muutmine ebaõnnestus!");
         } finally {
             setSubmitting(false);
         }
@@ -109,13 +109,13 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                 <h1 className="text-2xl text-left text-primary mb-10">Osavõtja info</h1>
             </div>
             <form onSubmit={onSubmit} className="flex flex-col gap-3 w-2/5">
-            
+
                 {attendeeType === AttendeeType.Person && (
                     <>
                         <div className="flex justify-between">
                             <Label>Eesnimi:</Label>
-                            <Input 
-                                required 
+                            <Input
+                                required
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                                 className="w-7/12"
@@ -123,8 +123,8 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                         </div>
                         <div className="flex justify-between">
                             <Label>Perenimi:</Label>
-                            <Input 
-                                required 
+                            <Input
+                                required
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
                                 className="w-7/12"
@@ -132,8 +132,8 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                         </div>
                         <div className="flex justify-between">
                             <Label>Isikukood:</Label>
-                            <Input 
-                                required 
+                            <Input
+                                required
                                 value={personalIdentificationNumber}
                                 onChange={(e) => setPersonalIdentificationNumber(e.target.value)}
                                 className="w-7/12"
@@ -146,8 +146,8 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                     <>
                         <div className="flex justify-between">
                             <Label>Ettevõtte nimi:</Label>
-                            <Input 
-                                required 
+                            <Input
+                                required
                                 value={companyName}
                                 onChange={(e) => setCompanyName(e.target.value)}
                                 className="w-7/12"
@@ -155,8 +155,8 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                         </div>
                         <div className="flex justify-between">
                             <Label>Registreerimisnumber:</Label>
-                            <Input 
-                                required 
+                            <Input
+                                required
                                 value={registrationNumber}
                                 onChange={(e) => setRegistrationNumber(e.target.value)}
                                 className="w-7/12"
@@ -179,9 +179,9 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                 <div className="flex justify-between">
                     <Label>Maksmisviis:</Label>
                     <div className="w-7/12">
-                        <Select 
-                            value={paymentMethod.toString()} 
-                            onValueChange={(value) => setPaymentMethod(Number(value) as PaymentMethod)} 
+                        <Select
+                            value={paymentMethod.toString()}
+                            onValueChange={(value) => setPaymentMethod(Number(value) as PaymentMethod)}
                             required
                         >
                             <SelectTrigger className="w-full">
@@ -198,14 +198,21 @@ function EditAttendeeForm({ attendeeId } : EditAttendeeFormProps) {
                 </div>
                 <div className="flex justify-between items-start">
                     <Label>Lisainfo:</Label>
-                    <Textarea 
+                    <Textarea
                         value={additionalInfo}
                         onChange={(e) => setAdditionalInfo(e.target.value)}
-                        maxLength={1500} 
+                        maxLength={1500}
                         className="w-7/12"
                     />
                 </div>
-                {error && <Alert variant="destructive">{error}</Alert>}
+                {error &&
+                    <Alert variant="destructive" className="w-fit flex items-center gap-5">
+                        <AlertTitle>Viga</AlertTitle>
+                        <AlertDescription>
+                            {error}
+                        </AlertDescription>
+                    </Alert>
+                }
                 <div className="self-start flex gap-3 mt-9">
                     <Button onClick={() => navigate(-1)} variant="outline" type="button" className="w-fit" disabled={submitting}>Tagasi</Button>
                     <Button type="submit" className="w-fit" disabled={submitting}>
