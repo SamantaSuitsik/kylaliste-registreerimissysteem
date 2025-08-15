@@ -12,13 +12,14 @@ import {NavLink} from "react-router-dom";
 interface EventsTableProps {
     events: EventItem[];
     onEventDelete: (eventId: number) => Promise<void>;
+    hasFutureEvents: boolean
 }
 
-function EventsTable({ events, onEventDelete }: EventsTableProps) {
+function EventsTable({ events, onEventDelete, hasFutureEvents }: EventsTableProps) {
     return (
         <div>
             <div className="flex p-5 items-center justify-center bg-primary text-primary-foreground">
-                <h1 className="text-2xl">Tulevased üritused</h1>
+                <h1 className="text-2xl">{hasFutureEvents ? "Tulevased üritused" : "Toimunud üritused"}</h1>
             </div>
             <Table>
                 <TableBody className="bg-white">
@@ -28,16 +29,18 @@ function EventsTable({ events, onEventDelete }: EventsTableProps) {
                                 <NavLink to={`yritus/${event.id}`}>{ i+1 }. {event.name}</NavLink>
                             </TableCell>
                             <TableCell>{event.startsAt.toLocaleDateString()}</TableCell>
-                            <TableCell className="flex justify-end items-center">
-                                <Button variant="link">
-                                    <NavLink to={`yritus/${event.id}/osavotjate-lisamine`}>
-                                        Lisa osavõtja
-                                    </NavLink>
-                                </Button>
-                                <Button onClick={() => onEventDelete(event.id)} variant="ghost" className="hover:bg-transparent cursor-pointer p-0">
-                                    <img src={removeIcon} alt="remove icon" className="w-5"/>
-                                </Button>
-                            </TableCell>
+                            { hasFutureEvents && (
+                                <TableCell className="flex justify-end items-center">
+                                    <Button variant="link">
+                                        <NavLink to={`yritus/${event.id}/osavotjate-lisamine`}>
+                                            Lisa osavõtja
+                                        </NavLink>
+                                    </Button>
+                                    <Button onClick={() => onEventDelete(event.id)} variant="ghost" className="hover:bg-transparent cursor-pointer p-0">
+                                        <img src={removeIcon} alt="remove icon" className="w-5"/>
+                                    </Button>
+                                </TableCell>
+                            )}
                         </TableRow>
                     ))}
                 </TableBody>
