@@ -36,7 +36,7 @@ function AddAttendeeForm({ eventId } : AddAttendeeFormProps) {
         const formdata = new FormData(e.currentTarget);
 
         const id_code = String(formdata.get("personal-identification-number"));
-        if (!isPersonalIdentificationNumberValid(id_code)) {
+        if (attendeeType === AttendeeType.Person && !isPersonalIdentificationNumberValid(id_code)) {
             setSubmitting(false);
             setError("Vigane isikukood!");
             return;
