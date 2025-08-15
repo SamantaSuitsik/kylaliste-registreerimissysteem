@@ -1,6 +1,8 @@
 # Külaliste registreerimissüsteem
 
-Külaliste registreerimissüsteemis on võimalik luua üritusi ning neid hallata. Üritustele saab lisada erinevat tüüpi osalejaid - eraisikuid või ettevõtteid. Selleks on loodud andmebaasi tabelid eraisikute ja ettevõte
+Külaliste registreerimissüsteemis on võimalik luua üritusi ning neid hallata. Üritustele saab lisada erinevat tüüpi osalejaid - eraisikuid või ettevõtteid. Selleks on loodud andmebaasi tabelid ürituste (Events), eraisikute (Persons) ja ettevõtete (Companies) jaoks. Kuna mõlemad on osavõtjad, on neil ka ülemtabel nimega Attendees. Ürituste ja osavõtjate vahel on mitu-mitmele seos. Seda aitab luua tabel nimega EventAttendees. 
+
+Andmebaasiga suhtluseks tehakse tabelitele päringuid kontrolleritest EventsController.cs ja AttendeesController.cs. Kontrollerite otspunktidele saadab päringuid kasutajaliides.
 
 ### Juhised käivitamiseks
 
